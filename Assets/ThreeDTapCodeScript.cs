@@ -18,7 +18,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
     private static int _moduleIdCounter = 1;
     private bool _moduleSolved;
 
-    private static readonly string[] WordList = {
+    private static readonly string[] _wordList = {
             "ABACK", "ABBEY", "ABBOT", "ABIDE", "ABORT", "ABOUT", "ABOVE", "ABUSE", "ABYSS", "ACIDS", "ACORN", "ACRES", "ACTED", "ACTOR", "ACUTE", "ADAPT", "ADDED", "ADDER", "ADDLE", "ADIEU", "ADIOS", "ADMIN", "ADMIT", "ADOPT", "ADORE", "ADORN", "ADULT", "AFFIX", "AFTER", "AGAIN", "AGENT", "AGILE", "AGING", "AGONY", "AGORA", "AGREE", "AHEAD", "AIDED", "AIMED", "AIOLI", "AIRED", "AISLE", "ALARM", "ALBUM", "ALERT", "ALGAE", "ALIAS", "ALIBI", "ALIEN", "ALIGN", "ALIKE", "ALIVE", "ALLAY", "ALLEY", "ALLOT", "ALLOW", "ALLOY", "ALOFT", "ALONE", "ALONG", "ALOOF", "ALOUD", "ALPHA", "ALTAR", "ALTER", "AMASS", "AMAZE", "AMBER", "AMBLE", "AMEND", "AMISH", "AMISS", "AMONG", "AMPLE", "AMUSE", "ANGEL", "ANGER", "ANGLE", "ANGLO", "ANGRY", "ANGST", "ANIME", "ANION", "ANISE", "ANKLE", "ANNEX", "ANNOY", "ANNUL", "ANTIC", "ANVIL", "AORTA", "APART", "APNEA", "APPLE", "APPLY", "APRON", "AREAS", "ARENA", "ARGUE", "ARISE", "ARMED", "ARMOR", "AROMA", "AROSE", "ARRAY", "ARROW", "ARSON", "ASHEN", "ASHES", "ASIAN", "ASIDE", "ASKED", "ASSAY", "ASSET", "ASTER", "ASTIR", "ATOLL", "ATOMS", "ATONE", "ATTIC", "AUDIO", "AUDIT", "AUGUR", "AUNTY", "AVAIL", "AVIAN", "AVOID", "AWAIT", "AWAKE", "AWARD", "AWARE", "AWASH", "AWFUL", "AWOKE", "AXIAL", "AXIOM", "AXION", "AZTEC",
             "BACKS", "BACON", "BADGE", "BADLY", "BAKED", "BAKER", "BALLS", "BANDS", "BANKS", "BARGE", "BARON", "BASAL", "BASED", "BASES", "BASIC", "BASIL", "BASIN", "BASIS", "BATCH", "BATHS", "BATTY", "BEACH", "BEADS", "BEAMS", "BEANS", "BEARD", "BEARS", "BEAST", "BEECH", "BEERS", "BEGAN", "BEGIN", "BEGUN", "BEING", "BELLS", "BELLY", "BELOW", "BELTS", "BENCH", "BERRY", "BIBLE", "BIDET", "BIGHT", "BIKES", "BILGE", "BILLS", "BINGE", "BINGO", "BIOME", "BIRCH", "BIRDS", "BIRTH", "BISON", "BITCH", "BITER", "BLACK", "BLADE", "BLAME", "BLAND", "BLANK", "BLARE", "BLAST", "BLAZE", "BLEAK", "BLEAT", "BLEED", "BLEEP", "BLEND", "BLESS", "BLIMP", "BLIND", "BLING", "BLINK", "BLISS", "BLITZ", "BLOCK", "BLOKE", "BLOND", "BLOOD", "BLOOM", "BLOOP", "BLOWN", "BLOWS", "BLUES", "BLUFF", "BLUNT", "BLUSH", "BOARD", "BOATS", "BOGGY", "BOGUS", "BOLTS", "BOMBS", "BONDS", "BONED", "BONER", "BONES", "BONNY", "BONUS", "BOOKS", "BOOST", "BOOTH", "BOOTS", "BORAX", "BORED", "BORER", "BORNE", "BORON", "BOTCH", "BOUGH", "BOULE", "BOUND", "BOWED", "BOWEL", "BOWLS", "BOXED", "BOXER", "BOXES", "BRACE", "BRAID", "BRAIN", "BRAKE", "BRAND", "BRASH", "BRASS", "BRAVE", "BRAWL", "BRAWN", "BRAZE", "BREAD", "BREAK", "BREAM", "BREED", "BRIAR", "BRIBE", "BRICK", "BRIDE", "BRIEF", "BRIER", "BRINE", "BRING", "BRINK", "BRINY", "BRISK", "BROAD", "BROIL", "BROKE", "BROOK", "BROOM", "BROTH", "BROWN", "BROWS", "BRUNT", "BRUSH", "BRUTE", "BUCKS", "BUDDY", "BUDGE", "BUGGY", "BUILD", "BUILT", "BULBS", "BULGE", "BULKY", "BULLS", "BUMPY", "BUNCH", "BUNNY", "BURNS", "BURNT", "BURST", "BUSES", "BUYER", "BUZZY", "BYLAW", "BYWAY",
             "CABBY", "CABIN", "CABLE", "CACHE", "CAIRN", "CAKES", "CALLS", "CALVE", "CALYX", "CAMPS", "CAMPY", "CANAL", "CANDY", "CANED", "CANNY", "CANOE", "CANON", "CARDS", "CARED", "CARER", "CARES", "CARGO", "CAROL", "CARRY", "CARVE", "CASED", "CASES", "CASTE", "CATCH", "CATER", "CAULK", "CAUSE", "CAVES", "CEASE", "CEDED", "CELLS", "CENTS", "CHAFE", "CHAFF", "CHAIN", "CHAIR", "CHALK", "CHAMP", "CHANT", "CHAOS", "CHAPS", "CHARM", "CHART", "CHARY", "CHASE", "CHASM", "CHEAP", "CHEAT", "CHECK", "CHEEK", "CHEER", "CHEMO", "CHESS", "CHEST", "CHICK", "CHIDE", "CHIEF", "CHILD", "CHILI", "CHILL", "CHIME", "CHINA", "CHIPS", "CHOIR", "CHORD", "CHORE", "CHOSE", "CHUCK", "CHUNK", "CHUTE", "CIDER", "CIGAR", "CINCH", "CITED", "CITES", "CIVET", "CIVIC", "CIVIL", "CLADE", "CLAIM", "CLANK", "CLASH", "CLASS", "CLAWS", "CLEAN", "CLEAR", "CLEAT", "CLERK", "CLICK", "CLIFF", "CLIMB", "CLING", "CLOAK", "CLOCK", "CLONE", "CLOSE", "CLOTH", "CLOUD", "CLOUT", "CLOVE", "CLOWN", "CLUBS", "CLUCK", "CLUES", "CLUNG", "CLUNK", "COACH", "COAST", "COATS", "COCOA", "CODES", "COINS", "COLIC", "COLON", "COLOR", "COMAL", "COMES", "COMIC", "COMMA", "CONCH", "CONIC", "CORAL", "CORGI", "CORNY", "CORPS", "COSTS", "COTTA", "COUCH", "COUGH", "COULD", "COUNT", "COURT", "COVEN", "COVER", "COYLY", "CRACK", "CRAFT", "CRANE", "CRANK", "CRASH", "CRASS", "CRATE", "CRAVE", "CRAWL", "CRAZY", "CREAK", "CREAM", "CREED", "CREEK", "CREPT", "CREST", "CREWS", "CRIED", "CRIES", "CRIME", "CRISP", "CRONE", "CROPS", "CROSS", "CROWD", "CROWN", "CRUDE", "CRUEL", "CRUSH", "CRUST", "CRYPT", "CUBAN", "CUBBY", "CUBIC", "CUBIT", "CUMIN", "CURLS", "CURLY", "CURRY", "CURSE", "CURVE", "CUTIE", "CYCLE", "CYNIC", "CZECH",
@@ -48,21 +48,11 @@ public class ThreeDTapCodeScript : MonoBehaviour
         };
     private string _chosenWord;
     private string _solutionWord;
-    private int[] _chosenWordIxs = new int[5];
 
-    private int[][] CubeConfigs = new int[6][]
-    {
-        new int[27] {0, 1, 2, 9, 10, 11, 17, 18, 19, 3, 4, 5, 12, -1, 13, 18, 19, 20, 6, 7, 8, 14, 15, 16, 23, 24, 25 }, // -X to +X, -Y to +Y, -Z to +Z
-        new int[27] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, -1, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 }, // -X to +X, -Z to +Z, -Y to +Y
-        new int[27] {0, 9, 17, 1, 10, 18, 2, 11, 19, 3, 12, 20, 4, -1, 21, 5, 13, 22, 6, 14, 23, 7, 15, 24, 8, 16, 25 }, // -Y to +Y, -X to +X, -Z to +Z
-        new int[27] {0, 9, 17, 3, 12, 20, 6, 14, 23, 1, 10, 18, 4, -1, 21, 7, 15, 24, 2, 11, 19, 5, 13, 22, 8, 16, 25 }, // -Y to +Y, -Z to +Z, -X to +X
-        new int[27] {0, 3, 6, 1, 4, 7, 2, 5, 8, 9, 12, 14, 10, -1, 15, 11, 13, 16, 17, 20, 23, 18, 21, 24, 19, 22, 25 }, // -Z to +Z, -X to +X, -Y to +Y
-        new int[27] {0, 3, 6, 9, 12, 14, 17, 20, 23, 1, 4, 7, 10, -1, 15, 18, 21, 24, 2, 5, 8, 11, 13, 16, 19, 22, 25 }  // -Z to +Z, -Y to +Y, -X to +X
-    };
-    private static readonly string[] ConfigNames = { "XYZ", "XZY", "YXZ", "YZX", "ZXY", "ZYX" };
-    private static readonly int[][] ConfigIxs = new int[6][] { new int[3] { 1, 5, 25 }, new int[3] { 1, 25, 5 }, new int[3] { 5, 1, 25 }, new int[3] { 5, 25, 1 }, new int[3] { 25, 1, 5 }, new int[3] { 25, 5, 1 } };
+    private static readonly string[] _configNames = { "XYZ", "XZY", "YXZ", "YZX", "ZXY", "ZYX" };
+    private static readonly int[][] _wordConfigMults = new int[6][] { new int[3] { 1, 5, 25 }, new int[3] { 1, 25, 5 }, new int[3] { 5, 1, 25 }, new int[3] { 5, 25, 1 }, new int[3] { 25, 1, 5 }, new int[3] { 25, 5, 1 } };
+    private static readonly int[][] _letterConfigMults = new int[6][] { new int[3] { 1, 3, 9 }, new int[3] { 1, 9, 3 }, new int[3] { 3, 1, 9 }, new int[3] { 3, 9, 1 }, new int[3] { 9, 1, 3 }, new int[3] { 9, 3, 1 } };
     private int _config;
-    private int[][] _taps = new int[5][] { new int[3], new int[3], new int[3], new int[3], new int[3] };
     private int[] _chosenTapCode;
 
     private bool _tapCodeLastCodeStillActive;
@@ -74,6 +64,11 @@ public class ThreeDTapCodeScript : MonoBehaviour
     private float _elapsedTime;
     private Coroutine _playTapCode;
 
+    private int convert(int ltr)
+    {
+        return ltr >= 14 ? ltr + 1 : ltr;
+    }
+
     private void Start()
     {
         _moduleId = _moduleIdCounter++;
@@ -82,7 +77,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
 
         // START RULE SEED
         var rnd = RuleSeedable.GetRNG();
-        var wordList = WordList.ToArray();
+        var wordList = _wordList.ToArray();
         rnd.Next();
         rnd.ShuffleFisherYates(wordList);
         // END RULE SEED
@@ -91,23 +86,17 @@ public class ThreeDTapCodeScript : MonoBehaviour
         _chosenWord = wordList[ix];
         Debug.LogFormat("[3D Tap Code #{0}] The chosen word is {1}.", _moduleId, _chosenWord);
         _config = Rnd.Range(0, 6);
-        for (int i = 0; i < _chosenWord.Length; i++)
-            _chosenWordIxs[i] = Array.IndexOf(CubeConfigs[_config], _chosenWord[i] - 'A');
-        Debug.LogFormat("[3D Tap Code #{0}] The coordinate order is {1}.", _moduleId, ConfigNames[_config]);
-        _chosenTapCode = _chosenWord.SelectMany(ltr =>
-        {
-            var index = Array.IndexOf(CubeConfigs[_config], ltr - 'A');
-            return new[] { index % 3 + 1, index / 3 % 3 + 1, index / 9 + 1 };
-        }).ToArray();
-        var _tapCodeChosenLog = _chosenTapCode.Join("");
-        Debug.LogFormat("[3D Tap Code #{0}] Chosen word in 3D Tap Code: {1}.", _moduleId, Enumerable.Range(0, 5).Select(ltrIx => _tapCodeChosenLog.Substring(3 * ltrIx, 3)).Join(" "));
-        var SerialNumber = BombInfo.GetSerialNumber();
+        Debug.LogFormat("[3D Tap Code #{0}] The coordinate order is {1}.", _moduleId, _configNames[_config]);
+        _chosenTapCode = _chosenWord.SelectMany(ltr => _letterConfigMults[_config].Select(mult => convert(ltr - 'A') / mult % 3 + 1)).ToArray();
+        var _chosenTapCodeLog = _chosenTapCode.Join("");
+        Debug.LogFormat("[3D Tap Code #{0}] Chosen word in 3D Tap Code: {1}.", _moduleId, Enumerable.Range(0, 5).Select(ltrIx => _chosenTapCodeLog.Substring(3 * ltrIx, 3)).Join(" "));
+        var sn = BombInfo.GetSerialNumber();
         var snNums = new int[3];
         for (int i = 0; i < snNums.Length; i++)
-            snNums[i] = SerialNumber[i] - '0' <= 9 ? SerialNumber[i] - '0' : SerialNumber[i] - 'A' + 1;
-        for (int i = 0; i < ConfigIxs[_config].Length; i++)
+            snNums[i] = sn[i] - '0' <= 9 ? sn[i] - '0' : sn[i] - 'A' + 1;
+        for (int i = 0; i < _wordConfigMults[_config].Length; i++)
         {
-            var c = ConfigIxs[_config][i];
+            var c = _wordConfigMults[_config][i];
             var below = ix % c;
             var inf = ix / c % 5;
             var above = ix / (5 * c);
@@ -116,48 +105,47 @@ public class ThreeDTapCodeScript : MonoBehaviour
         }
         _solutionWord = wordList[ix];
         Debug.LogFormat("[3D Tap Code #{0}] Solution word: {1}", _moduleId, _solutionWord);
-        _solutionTapCode = _solutionWord.SelectMany(ltr =>
-        {
-            var index = Array.IndexOf(CubeConfigs[_config], ltr - 'A');
-            return new[] { index % 3 + 1, index / 3 % 3 + 1, index / 9 + 1 };
-        }).ToArray();
-        var tapCodeSolLog = _solutionTapCode.Join("");
-        Debug.LogFormat("[3D Tap Code #{0}] Solution in 3D Tap Code: {1}.", _moduleId, Enumerable.Range(0, 5).Select(ltrIx => tapCodeSolLog.Substring(3 * ltrIx, 3)).Join(" "));
+        _solutionTapCode = _solutionWord.SelectMany(ltr => _letterConfigMults[_config].Select(mult => convert(ltr - 'A') / mult % 3 + 1)).ToArray();
+        var solutionTapCodeLog = _solutionTapCode.Join("");
+        Debug.LogFormat("[3D Tap Code #{0}] Solution in 3D Tap Code: {1}.", _moduleId, Enumerable.Range(0, 5).Select(ltrIx => solutionTapCodeLog.Substring(3 * ltrIx, 3)).Join(" "));
     }
 
     private bool SelPress()
     {
-        if (!_moduleSolved)
-            _timer = StartCoroutine(Timer());
+        if (_moduleSolved)
+            return false;
+        if (_timer != null)
+            StopCoroutine(_timer);
+        _timer = StartCoroutine(Timer());
         return false;
     }
 
     private void SelRelease()
     {
-        if (!_moduleSolved)
+        if (_moduleSolved)
+            return;
+
+        if (_timer != null)
+            StopCoroutine(_timer);
+        if (_playTapCode != null)
+            StopCoroutine(_playTapCode);
+        if (_elapsedTime < 0.5f)
         {
-            if (_timer != null)
-                StopCoroutine(_timer);
-            if (_playTapCode != null)
-                StopCoroutine(_playTapCode);
-            if (_elapsedTime < 0.5f)
-            {
-                if (_tapCodeLastCodeStillActive)
-                    _tapCodeInput[_tapCodeInput.Count - 1]++;
-                else
-                {
-                    _tapCodeLastCodeStillActive = true;
-                    _tapCodeInput.Add(1);
-                }
-                if (_waitingToInput != null)
-                    StopCoroutine(_waitingToInput);
-                _waitingToInput = StartCoroutine(acknowledgeTapCode());
-            }
+            if (_tapCodeLastCodeStillActive)
+                _tapCodeInput[_tapCodeInput.Count - 1]++;
             else
             {
-                _tapCodeInput.Clear();
-                _playTapCode = StartCoroutine(PlayTapCode());
+                _tapCodeLastCodeStillActive = true;
+                _tapCodeInput.Add(1);
             }
+            if (_waitingToInput != null)
+                StopCoroutine(_waitingToInput);
+            _waitingToInput = StartCoroutine(acknowledgeTapCode());
+        }
+        else
+        {
+            _tapCodeInput.Clear();
+            _playTapCode = StartCoroutine(PlayTapCode());
         }
     }
 
@@ -213,7 +201,10 @@ public class ThreeDTapCodeScript : MonoBehaviour
         else
         {
             Module.HandleStrike();
-            Debug.LogFormat("[3D Tap Code #{0}] Inputted {1}. Strike.", _moduleId, _tapCodeInput.Join(""));
+            var chunks = new List<string>();
+            for (var i = 0; i < _tapCodeInput.Count; i += 3)
+                chunks.Add(_tapCodeInput.Skip(i).Take(3).Join(""));
+            Debug.LogFormat("[3D Tap Code #{0}] Inputted {1} {2}. Strike.", _moduleId, chunks.Join(" "), _tapCodeInput.Skip(3 * (_tapCodeInput.Count / 3)).Join(""));
         }
         _tapCodeInput = null;
     }
