@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Rnd = UnityEngine.Random;
 using KModkit;
+using System.Text.RegularExpressions;
 
 public class ThreeDTapCodeScript : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
     private int _config;
     private int[] _chosenTapCode;
 
-    private bool _tapCodeLastCodeStillActive;
+    private bool _tapCodeActive;
     private List<int> _tapCodeInput = new List<int>();
     private Coroutine _waitingToInput;
     private int[] _solutionTapCode;
@@ -66,7 +67,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
 
     private int convert(int ltr)
     {
-        return ltr >= 14 ? ltr + 1 : ltr;
+        return ltr >= 13 ? ltr + 1 : ltr;
     }
 
     private void Start()
@@ -131,11 +132,11 @@ public class ThreeDTapCodeScript : MonoBehaviour
             StopCoroutine(_playTapCode);
         if (_elapsedTime < 0.5f)
         {
-            if (_tapCodeLastCodeStillActive)
+            if (_tapCodeActive)
                 _tapCodeInput[_tapCodeInput.Count - 1]++;
             else
             {
-                _tapCodeLastCodeStillActive = true;
+                _tapCodeActive = true;
                 _tapCodeInput.Add(1);
             }
             if (_waitingToInput != null)
@@ -176,11 +177,9 @@ public class ThreeDTapCodeScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Audio.PlaySoundAtTransform("MiniTap", transform);
-        _tapCodeLastCodeStillActive = false;
-
+        _tapCodeActive = false;
         if (_tapCodeInput.Count < 15)
             yield break;
-
         interpretTapCode();
     }
 
@@ -206,6 +205,85 @@ public class ThreeDTapCodeScript : MonoBehaviour
                 chunks.Add(_tapCodeInput.Skip(i).Take(3).Join(""));
             Debug.LogFormat("[3D Tap Code #{0}] Inputted {1} {2}. Strike.", _moduleId, chunks.Join(" "), _tapCodeInput.Skip(3 * (_tapCodeInput.Count / 3)).Join(""));
         }
-        _tapCodeInput = null;
+        _tapCodeInput.Clear();
+    }
+
+#pragma warning disable 414
+    private string TwitchHelpMessage = "!{0} tap 123 123 123 123 123 | !{0} listen";
+#pragma warning restore 414
+
+    private IEnumerator ProcessTwitchCommand(string command)
+    {
+        var m = Regex.Match(command, "^(?:(?<L>listen|play)|(?:tap |submit |press |)(?<D>([1-3][ ,;]*){15}))$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        if (!m.Success)
+            yield break;
+        yield return null;
+        if (m.Groups["L"].Success)
+        {
+            Sel.OnInteract();
+            yield return new WaitForSeconds(0.7f);
+            Sel.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+            yield break;
+        }
+
+        foreach (char tap in m.Groups["D"].Value)
+        {
+            yield return "trycancel";
+            int taps;
+            if (!int.TryParse(tap.ToString(), out taps))
+                continue;
+            for (int i = 0; i < taps; i++)
+            {
+                Sel.OnInteract();
+                yield return new WaitForSeconds(0.05f);
+                Sel.OnInteractEnded();
+                yield return new WaitForSeconds(0.05f);
+                yield return "trycancel";
+            }
+
+            while (_tapCodeActive)
+                yield return "trycancel";
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator TwitchHandleForcedSolve()
+    {
+        while (_tapCodeActive)
+            yield return true;
+        bool fineSoFar = true;
+        int amountCorrect = 0;
+        for (int i = 0; i < _tapCodeInput.Count; i++)
+        {
+            if (_tapCodeInput[i] != _solutionTapCode[i])
+            {
+                fineSoFar = false;
+                break;
+            }
+            amountCorrect++;
+        }
+        if (!fineSoFar)
+        {
+            amountCorrect = 0;
+            Sel.OnInteract();
+            yield return new WaitForSeconds(0.7f);
+            Sel.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+        }
+        for (int i = amountCorrect; i < _solutionTapCode.Length; i++)
+        {
+            for (int j = 0; j < _solutionTapCode[i]; j++)
+            {
+                Sel.OnInteract();
+                yield return new WaitForSeconds(0.1f);
+                Sel.OnInteractEnded();
+                yield return new WaitForSeconds(0.1f);
+            }
+            while (_tapCodeActive)
+                yield return true;
+        }
+        while (!_moduleSolved)
+            yield return true;
     }
 }
