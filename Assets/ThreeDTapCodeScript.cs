@@ -65,6 +65,8 @@ public class ThreeDTapCodeScript : MonoBehaviour
     private float _elapsedTime;
     private Coroutine _playTapCode;
 
+    private string[] _chosenWordList;
+
     private int convert(int ltr)
     {
         return ltr >= 13 ? ltr + 1 : ltr;
@@ -78,13 +80,14 @@ public class ThreeDTapCodeScript : MonoBehaviour
 
         // START RULE SEED
         var rnd = RuleSeedable.GetRNG();
-        var wordList = _wordList.ToArray();
+        _chosenWordList = _wordList.ToArray();
         rnd.Next();
-        rnd.ShuffleFisherYates(wordList);
+        rnd.ShuffleFisherYates(_chosenWordList);
+        _chosenWordList = _chosenWordList.Take(125).ToArray();
         // END RULE SEED
 
         int ix = Rnd.Range(0, 125);
-        _chosenWord = wordList[ix];
+        _chosenWord = _chosenWordList[ix];
         Debug.LogFormat("[3D Tap Code #{0}] The chosen word is {1}.", _moduleId, _chosenWord);
         _config = Rnd.Range(0, 6);
         Debug.LogFormat("[3D Tap Code #{0}] The coordinate order is {1}.", _moduleId, _configNames[_config]);
@@ -104,7 +107,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
             inf = (inf + snNums[i]) % 5;
             ix = below + c * inf + (5 * c) * above;
         }
-        _solutionWord = wordList[ix];
+        _solutionWord = _chosenWordList[ix];
         Debug.LogFormat("[3D Tap Code #{0}] Solution word: {1}", _moduleId, _solutionWord);
         _solutionTapCode = _solutionWord.SelectMany(ltr => _letterConfigMults[_config].Select(mult => convert(ltr - 'A') / mult % 3 + 1)).ToArray();
         var solutionTapCodeLog = _solutionTapCode.Join("");
