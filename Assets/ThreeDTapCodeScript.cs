@@ -128,13 +128,12 @@ public class ThreeDTapCodeScript : MonoBehaviour
     {
         if (_moduleSolved)
             return;
-
         if (_timer != null)
             StopCoroutine(_timer);
-        if (_playTapCode != null)
-            StopCoroutine(_playTapCode);
         if (_elapsedTime < 0.5f)
         {
+            if (_playTapCode != null)
+                StopCoroutine(_playTapCode);
             if (_tapCodeActive)
                 _tapCodeInput[_tapCodeInput.Count - 1]++;
             else
@@ -147,10 +146,7 @@ public class ThreeDTapCodeScript : MonoBehaviour
             _waitingToInput = StartCoroutine(acknowledgeTapCode());
         }
         else
-        {
             _tapCodeInput.Clear();
-            _playTapCode = StartCoroutine(PlayTapCode());
-        }
     }
 
     private IEnumerator PlayTapCode()
@@ -169,11 +165,12 @@ public class ThreeDTapCodeScript : MonoBehaviour
     private IEnumerator Timer()
     {
         _elapsedTime = 0f;
-        while (true)
+        while (_elapsedTime < 0.5f)
         {
             yield return null;
             _elapsedTime += Time.deltaTime;
         }
+        _playTapCode = StartCoroutine(PlayTapCode());
     }
 
     private IEnumerator acknowledgeTapCode()
